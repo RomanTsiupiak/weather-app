@@ -1,9 +1,13 @@
 import React from 'react';
 import './styles.css';
 
+import Weather from 'Pages/Weather';
+
 function App() {
   return (
-    <div className="h-screen w-screen flex items-center justify-center">Weather Application</div>
+    <div className="h-screen w-screen flex items-center justify-center">
+      <Weather />
+    </div>
   );
 }
 
