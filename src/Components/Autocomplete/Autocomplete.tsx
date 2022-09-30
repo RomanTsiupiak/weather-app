@@ -1,27 +1,28 @@
 import React from 'react';
 
 import { GetGeoByCityNameParams } from 'types';
+import { useDebounce } from 'hooks/useDebounce';
 
 import AutocompleteContent from './AutocompleteContent';
 
 type AutocompleteProps<RecordType> = {
-  handleChange: (params: GetGeoByCityNameParams) => Promise<RecordType[]>;
+  handleGetByCityName: (params: GetGeoByCityNameParams) => Promise<RecordType[]>;
   handleSelect: (item: RecordType) => void;
 };
 
 const Autocomplete = <RecordType extends { label: string }>({
-  handleChange,
+  handleGetByCityName,
   handleSelect,
 }: AutocompleteProps<RecordType>) => {
   const [options, setOptions] = React.useState<RecordType[]>([]);
   const [search, setSearch] = React.useState<string>('');
+  const debouncedSearch = useDebounce<string>({ value: search, delay: 700 });
 
-  const onChange = (value: string) => {
-    setSearch(value);
-    if (value) {
-      handleChange({ q: value }).then((res) => setOptions(res));
+  React.useEffect(() => {
+    if (debouncedSearch) {
+      handleGetByCityName({ q: debouncedSearch }).then((res) => setOptions(res));
     }
-  };
+  }, [debouncedSearch]);
 
   return (
     <AutocompleteContent<RecordType>
@@ -29,7 +30,7 @@ const Autocomplete = <RecordType extends { label: string }>({
       search={search}
       setSearch={setSearch}
       handleSelect={handleSelect}
-      onChange={onChange}
+      onChange={setSearch}
     />
   );
 };
