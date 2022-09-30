@@ -1,26 +1,27 @@
 import React from 'react';
 
-type AutocompleteDataType = {
-  id: number;
-  label: string;
-};
-
-type AutocompleteContentProps = {
-  data: AutocompleteDataType[];
+type AutocompleteContentProps<RecordType> = {
+  data: RecordType[];
   search: string;
   setSearch: (value: string) => void;
+  handleSelect: (item: RecordType) => void;
   onChange: (value: string) => void;
 };
 
-const AutocompleteContent = ({ data, search, setSearch, onChange }: AutocompleteContentProps) => {
+const AutocompleteContent = <RecordType extends { label: string }>({
+  data,
+  search,
+  setSearch,
+  handleSelect,
+  onChange,
+}: AutocompleteContentProps<RecordType>) => {
   const [display, setDisplay] = React.useState<boolean>(false);
 
-  const onSelect = (value: string) => {
-    setSearch(value);
+  const onSelect = (item: RecordType) => {
+    setSearch(item.label);
+    handleSelect(item);
     setDisplay(false);
   };
-
-  console.log(data);
 
   return (
     <div className="w-full relative">
@@ -35,9 +36,9 @@ const AutocompleteContent = ({ data, search, setSearch, onChange }: Autocomplete
         <div className="w-full absolute bg-gray-300/70 my-[4px] rounded-md max-h-[300px] overflow-y-scroll">
           {Boolean(data.length) &&
             data
-              .filter((item) => item.label.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
-              .map((item) => (
-                <div onClick={() => onSelect(item.label)} key={item.id} className="px-[8px] py-[4px] cursor-pointer">
+              .filter((el) => el.label.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+              .map((item, index) => (
+                <div onClick={() => onSelect(item)} key={index} className="px-[8px] py-[4px] cursor-pointer">
                   {item.label}
                 </div>
               ))}
