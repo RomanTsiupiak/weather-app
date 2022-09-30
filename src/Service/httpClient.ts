@@ -1,4 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+
+export type HTTPResponse<T> = AxiosResponse<T>;
 
 export const httpClient = axios.create({
   baseURL: '',
@@ -8,7 +10,7 @@ export const httpClient = axios.create({
 httpClient.interceptors.request.use((config) => {
   config.params = {
     ...config.params,
-    appid: 'f404c0bcddca7d09976ddaacf9cde884',
+    appid: process.env.REACT_APP_API_KEY,
   };
   return config;
 });

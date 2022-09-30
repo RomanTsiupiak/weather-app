@@ -1,30 +1,34 @@
 import React from 'react';
 
-import AutocompleteContent from './AutocompleteContent';
-import { autocompleteUtils } from './autocompleteUtils.utils';
+import { GetGeoByCityNameParams } from 'types';
 
-type AutocompleteProps = {
-  // TODO: remove any after implementation httpClient
-  fetchAction: any;
+import AutocompleteContent from './AutocompleteContent';
+
+type AutocompleteProps<RecordType> = {
+  handleChange: (params: GetGeoByCityNameParams) => Promise<RecordType[]>;
+  handleSelect: (item: RecordType) => void;
 };
 
-const Autocomplete = <RecordType,>({ fetchAction }: AutocompleteProps) => {
+const Autocomplete = <RecordType extends { label: string }>({
+  handleChange,
+  handleSelect,
+}: AutocompleteProps<RecordType>) => {
   const [options, setOptions] = React.useState<RecordType[]>([]);
   const [search, setSearch] = React.useState<string>('');
 
   const onChange = (value: string) => {
     setSearch(value);
-    // TODO: update after implementation useDebounce and httpClient
     if (value) {
-      fetchAction(value).then((res: any) => setOptions(res.data));
+      handleChange({ q: value }).then((res) => setOptions(res));
     }
   };
 
   return (
-    <AutocompleteContent
-      data={autocompleteUtils.formatData(options)}
+    <AutocompleteContent<RecordType>
+      data={options}
       search={search}
       setSearch={setSearch}
+      handleSelect={handleSelect}
       onChange={onChange}
     />
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-import Weather from 'Pages/Weather';
+import Weather from 'Pages/Weather/Weather';
 
 function App() {
   return (
