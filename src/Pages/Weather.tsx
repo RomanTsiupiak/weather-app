@@ -1,20 +1,14 @@
 import React from 'react';
 
 import WeatherCard from 'Components/WeatherCard/WeatherCard';
+// import { httpClient } from 'Service/httpClient';
 // import Autocomplete from 'Components/Autocomplete/Autocomplete';
 
-// import axios from 'axios';
-//
-// const fetchAction = (city: string) =>
-//   axios.get('http://api.openweathermap.org/geo/1.0/direct', {
-//     params: {
-//       q: city,
-//       limit: 5,
-//       appid: 'f404c0bcddca7d09976ddaacf9cde884',
-//     },
-//   });
-
 const Weather = () => {
+  // React.useEffect(() => {
+  //   httpClient.get('https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99');
+  // }, []);
+
   return (
     <div className="w-[600px] h-[400px] p-[12px] flex flex-col items-center justify-around">
       {/*<Autocomplete fetchAction={fetchAction} />*/}
