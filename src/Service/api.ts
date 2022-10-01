@@ -23,6 +23,7 @@ export const getGoeByCityName = ({
 export const getSelectedCityWeather = ({
   lat,
   lon,
+  units = 'metric',
   ...rest
 }: GetWeatherInCityParams): Promise<HTTPResponse<GetWeatherInCityResponse>> => {
   return httpClient.request({
@@ -31,6 +32,7 @@ export const getSelectedCityWeather = ({
     params: {
       lat: lat,
       lon: lon,
+      units: units,
       ...rest,
     },
   });

@@ -21,7 +21,7 @@ const Weather = () => {
   return (
     <div className="w-[600px] h-[400px] p-[12px] flex flex-col items-center justify-around">
       <Autocomplete<FormatDataForAutoComplete> handleSelect={handleSelect} handleGetByCityName={handleGetByCityName} />
-      {weather && <WeatherCard />}
+      {weather && <WeatherCard weather={weather} />}
     </div>
   );
 };
