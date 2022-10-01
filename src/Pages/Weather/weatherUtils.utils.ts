@@ -4,6 +4,6 @@ export type FormatDataForAutoComplete = { label: string } & Omit<GetGeoByCityNam
 
 export const weatherUtils = {
   formatDataForAutocomplete: (data: GetGeoByCityNameResponse[]): FormatDataForAutoComplete[] => {
-    return data.map((item) => ({ label: `${item.name}, ${item.country}`, ...item }));
+    return data.map((item) => ({ label: `${item.name}, ${item.state} ${item.country}`, ...item }));
   },
 };
