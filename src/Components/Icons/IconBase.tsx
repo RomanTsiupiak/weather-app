@@ -1,8 +1,8 @@
 import React from 'react';
 
-type IconBaseProps = {
+export interface IconBaseProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number;
-} & React.ComponentProps<'svg'>;
+}
 
 const IconBase = React.forwardRef<SVGSVGElement, IconBaseProps>((props, ref) => {
   const { size, children, ...restProps } = props;
